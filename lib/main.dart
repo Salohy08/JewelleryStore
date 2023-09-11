@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo_2/modules/app/home/screen/cart.screen.dart';
 import 'package:flutter_demo_2/modules/app/home/screen/detail.screen.dart';
 import 'package:flutter_demo_2/modules/app/home/screen/home.screen.dart';
+import 'package:flutter_demo_2/modules/app/home/screen/testAr.screen.dart';
 import 'package:flutter_demo_2/modules/auth/welcome/screen/login.screen.dart';
 import 'package:flutter_demo_2/modules/auth/welcome/screen/register.screen.dart';
 import 'package:flutter_demo_2/modules/auth/welcome/screen/welcome.screen.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: WelcomeScreen(),
+      home: TestArScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

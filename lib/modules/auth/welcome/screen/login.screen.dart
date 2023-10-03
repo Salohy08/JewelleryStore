@@ -12,6 +12,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,42 +62,64 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text("Please enter the details below to continue",
                       style: TextStyle(color: Colors.white, fontSize: 20)),
                 ),
-                TextFormField(
-                    cursorColor: AppColor.primary,
-                    style: const TextStyle(fontSize: 18),
-                    decoration: AppInputDecoration.textField(
-                        hintText: "Email", icon: Icons.email)),
-                Padding(
-                  padding: const EdgeInsets.only(top: 25, bottom: 30),
-                  child: TextFormField(
-                      cursorColor: AppColor.primary,
-                      obscureText: true,
-                      style: const TextStyle(fontSize: 18),
-                      decoration: AppInputDecoration.textField(
-                          hintText: "Mot de passe", icon: Icons.lock)),
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomeScreen()));
-                      },
-                      style: ButtonStyle(
-                          padding: MaterialStateProperty.all(
-                              const EdgeInsets.symmetric(vertical: 15)),
-                          backgroundColor:
-                              MaterialStateProperty.all(AppColor.primary)),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Login',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20)),
-                        ],
-                      )),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '\u26A0 Entrez votre email';
+                            }
+                            return null;
+                          },
+                          cursorColor: AppColor.primary,
+                          style: const TextStyle(fontSize: 18),
+                          decoration: AppInputDecoration.textField(
+                              hintText: "Email", icon: Icons.email)),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 25, bottom: 30),
+                        child: TextFormField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '\u26A0 Entrez votre mot de passe';
+                              }
+                              return null;
+                            },
+                            cursorColor: AppColor.primary,
+                            obscureText: true,
+                            style: const TextStyle(fontSize: 18),
+                            decoration: AppInputDecoration.textField(
+                                hintText: "Mot de passe", icon: Icons.lock)),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomeScreen()));
+                              }
+                            },
+                            style: ButtonStyle(
+                                padding: MaterialStateProperty.all(
+                                    const EdgeInsets.symmetric(vertical: 15)),
+                                backgroundColor: MaterialStateProperty.all(
+                                    AppColor.primary)),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Login',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20)),
+                              ],
+                            )),
+                      ),
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 40, bottom: 20),

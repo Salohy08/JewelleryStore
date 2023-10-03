@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo_2/config/theme/colors.dart';
+import 'package:flutter_demo_2/modules/auth/welcome/screen/login.screen.dart';
 
 import '../../../../config/theme/app_input_decoration.dart';
 
@@ -12,6 +13,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreen extends State<RegisterScreen> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,43 +62,79 @@ class _RegisterScreen extends State<RegisterScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 25, bottom: 30),
-                  child: TextFormField(
-                      cursorColor: AppColor.primary,
-                      style: const TextStyle(fontSize: 18),
-                      decoration: AppInputDecoration.textField(
-                          hintText: "Full Name", icon: Icons.person)),
-                ),
-                TextFormField(
-                    cursorColor: AppColor.primary,
-                    style: const TextStyle(fontSize: 18),
-                    decoration: AppInputDecoration.textField(
-                        hintText: "Email", icon: Icons.email)),
-                Padding(
-                  padding: const EdgeInsets.only(top: 25, bottom: 30),
-                  child: TextFormField(
-                      cursorColor: AppColor.primary,
-                      obscureText: true,
-                      style: const TextStyle(fontSize: 18),
-                      decoration: AppInputDecoration.textField(
-                          hintText: "Mot de passe", icon: Icons.lock)),
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                          padding: MaterialStateProperty.all(
-                              const EdgeInsets.symmetric(vertical: 15)),
-                          backgroundColor:
-                              MaterialStateProperty.all(AppColor.primary)),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Register',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20)),
-                        ],
-                      )),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return '\u26A0 Entrez votre nom';
+                              }
+                              return null;
+                            },
+                            cursorColor: AppColor.primary,
+                            style: const TextStyle(fontSize: 18),
+                            decoration: AppInputDecoration.textField(
+                                hintText: "Full Name", icon: Icons.person)),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 25),
+                          child: TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return '\u26A0 Entrez votre email';
+                                }
+                                return null;
+                              },
+                              cursorColor: AppColor.primary,
+                              style: const TextStyle(fontSize: 18),
+                              decoration: AppInputDecoration.textField(
+                                  hintText: "Email", icon: Icons.email)),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 25, bottom: 30),
+                          child: TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return '\u26A0 Entrez votre mot de passe';
+                                }
+                                return null;
+                              },
+                              cursorColor: AppColor.primary,
+                              obscureText: true,
+                              style: const TextStyle(fontSize: 18),
+                              decoration: AppInputDecoration.textField(
+                                  hintText: "Mot de passe", icon: Icons.lock)),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginScreen()));
+                                }
+                              },
+                              style: ButtonStyle(
+                                  padding: MaterialStateProperty.all(
+                                      const EdgeInsets.symmetric(vertical: 15)),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      AppColor.primary)),
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Register',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 20)),
+                                ],
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 40, bottom: 20),

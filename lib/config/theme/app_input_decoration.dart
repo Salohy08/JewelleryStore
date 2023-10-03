@@ -10,6 +10,7 @@ class AppInputDecoration {
       Color? fillColor,
       Color? iconColor}) {
     return InputDecoration(
+        errorStyle: TextStyle(fontSize: 14, color: Colors.red.shade400),
         contentPadding: const EdgeInsets.symmetric(vertical: 15),
         prefixIcon: Icon(
           icon,
